@@ -26,7 +26,7 @@ class WeatherViewController: UIViewController {
     
     var weather = [Weather]()
     var dictStore = [[String: Any]]()
-
+    var isoffline = false
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -34,7 +34,7 @@ class WeatherViewController: UIViewController {
 //        navigationController?.title = "Weather"
         self.title = "Weather"
         
-
+        if isoffline {
                 if let loadedData = UserDefaults.standard.array(forKey: "dictStore") as? [[String: Any]] {
 
                     self.cityLbl.text = loadedData[0]["name"] as? String
@@ -60,10 +60,14 @@ class WeatherViewController: UIViewController {
                 }
 
         }
-        getJSON()
+    }
 
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        getJSON()
+         
+    }
     
        func getJSON(){
         
@@ -92,9 +96,11 @@ class WeatherViewController: UIViewController {
                         let suns = (weatherModel?.sys.sunset),
                         let lowt =  (weatherModel?.main.tempMin),
                         let hight = (weatherModel?.main.tempMax){
-                        
+                        print(weatherModel?.name,weatherModel?.weather[0].weatherDescription)
                         self.dictStore.append(["name": weatherModel?.name, "weatherDescription" : weatherModel?.weather[0].weatherDescription, "deg" : (weatherModel?.wind.deg),"pressure" : (weatherModel?.main.pressure),"speed": (weatherModel?.wind.speed), "humidity" : (weatherModel?.main.humidity), "sunrise" : (weatherModel?.sys.sunrise),"sunset" : (weatherModel?.sys.sunset),"tempMin" : (weatherModel?.main.tempMin), "tempMax" : (weatherModel?.main.tempMax)])
                         UserDefaults.standard.set(self.dictStore, forKey: "dictStore")
+                        UserDefaults.standard.set(true, forKey: "offline")
+
                         
                          self.cctempLbl.text = String(degb) + "℃"
                         self.pressureLbl.text = "Pressure : " + String(mainb)

@@ -7,12 +7,30 @@
 //
 
 import UIKit
-
+import Network
 class ViewController: UIViewController {
+
+    
+    let monitor = NWPathMonitor()
+
+    var isoffline = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+         let queue = DispatchQueue(label: "Monitor")
+         monitor.start(queue: queue)
+        monitor.pathUpdateHandler = { path in
+            if path.status == .satisfied {
+                print("We're connected!")
+                self.isoffline = false
+            } else {
+                print("No connection.")
+                self.isoffline = true
+            }
+
+            print(path.isExpensive)
+        }
 
     }
 
@@ -24,6 +42,7 @@ class ViewController: UIViewController {
             weatherV.city = "bengaluru"
 
         }
+        weatherV.isoffline = isoffline
         self.navigationController?.pushViewController(weatherV, animated: true)
               
     }
