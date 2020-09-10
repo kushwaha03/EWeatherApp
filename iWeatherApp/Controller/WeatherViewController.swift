@@ -25,14 +25,42 @@ class WeatherViewController: UIViewController {
       @IBOutlet weak var hightempLbl: UILabel!
     
     var weather = [Weather]()
+    var dictStore = [[String: Any]]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
 //        navigationController?.title = "Weather"
         self.title = "Weather"
-        getJSON()
+        
 
+                if let loadedData = UserDefaults.standard.array(forKey: "dictStore") as? [[String: Any]] {
+
+                    self.cityLbl.text = loadedData[0]["name"] as? String
+                            self.disLbl.text = loadedData[0]["weatherDescription"] as? String
+                    if let degb = loadedData[0]["deg"] as? Int,
+                            let mainb = loadedData[0]["pressure"] as? Int,
+                               let speedb =  loadedData[0]["speed"] as? Int,
+                               let humb = loadedData[0]["humidity"] as? Int,
+                               let sunr =  loadedData[0]["sunrise"] as? Int,
+                               let suns = loadedData[0]["sunset"] as? Int,
+                               let lowt =  loadedData[0]["tempMin"] as? Int,
+                               let hight = loadedData[0]["tempMax"] as? Int {
+                    
+                     self.cctempLbl.text = String(degb) + "℃"
+                    self.pressureLbl.text = "Pressure : " + String(mainb)
+                    self.windLbl.text = "Wind : " + String(speedb)
+                    self.humidtyLbl.text = "Humidity : " + String(humb)
+                    self.sunriseLbl.text = "Sunrise : " + String(sunr)
+                    self.sunsetLbl.text = "Sunset : " + String(suns)
+                    self.lowtempLbl.text = "Low : " + String(lowt)
+                    self.hightempLbl.text = "High : " + String(hight)
+                    
+                }
+
+        }
+        getJSON()
 
     }
     
@@ -64,6 +92,10 @@ class WeatherViewController: UIViewController {
                         let suns = (weatherModel?.sys.sunset),
                         let lowt =  (weatherModel?.main.tempMin),
                         let hight = (weatherModel?.main.tempMax){
+                        
+                        self.dictStore.append(["name": weatherModel?.name, "weatherDescription" : weatherModel?.weather[0].weatherDescription, "deg" : (weatherModel?.wind.deg),"pressure" : (weatherModel?.main.pressure),"speed": (weatherModel?.wind.speed), "humidity" : (weatherModel?.main.humidity), "sunrise" : (weatherModel?.sys.sunrise),"sunset" : (weatherModel?.sys.sunset),"tempMin" : (weatherModel?.main.tempMin), "tempMax" : (weatherModel?.main.tempMax)])
+                        UserDefaults.standard.set(self.dictStore, forKey: "dictStore")
+                        
                          self.cctempLbl.text = String(degb) + "℃"
                         self.pressureLbl.text = "Pressure : " + String(mainb)
                         self.windLbl.text = "Wind : " + String(speedb)

@@ -105,10 +105,9 @@
 			children = (
 				74432647250A0A3500441105 /* AppDelegate.swift */,
 				74432649250A0A3500441105 /* SceneDelegate.swift */,
-				7443264B250A0A3500441105 /* ViewController.swift */,
-				74432679250A0D3A00441105 /* WeatherModel.swift */,
-				7443264D250A0A3500441105 /* Main.storyboard */,
-				74432677250A0BFC00441105 /* WeatherViewController.swift */,
+				7443267B250A567300441105 /* Model */,
+				7443267D250A568A00441105 /* Controller */,
+				7443267C250A568100441105 /* View */,
 				74432650250A0A3700441105 /* Assets.xcassets */,
 				74432652250A0A3700441105 /* LaunchScreen.storyboard */,
 				74432655250A0A3700441105 /* Info.plist */,
@@ -132,6 +131,31 @@
 				7443266B250A0A3800441105 /* Info.plist */,
 			);
 			path = iWeatherAppUITests;
+			sourceTree = "<group>";
+		};
+		7443267B250A567300441105 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				74432679250A0D3A00441105 /* WeatherModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		7443267C250A568100441105 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7443264D250A0A3500441105 /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7443267D250A568A00441105 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				74432677250A0BFC00441105 /* WeatherViewController.swift */,
+				7443264B250A0A3500441105 /* ViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
