@@ -37,9 +37,9 @@ class ViewController: UIViewController {
     @IBAction func onClickCity(_ sender: UIButton) {
         guard let weatherV = self.storyboard?.instantiateViewController(identifier: "WeatherViewController") as? WeatherViewController else { return  }
         if sender.tag == 0 {
-        weatherV.city = "london"
+        weatherV.city = "London"
         } else if sender.tag == 1 {
-            weatherV.city = "bengaluru"
+            weatherV.city = "Bengaluru"
 
         }
         weatherV.isoffline = isoffline

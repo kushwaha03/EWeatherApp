@@ -33,9 +33,11 @@ class WeatherViewController: UIViewController {
         // Do any additional setup after loading the view.
 //        navigationController?.title = "Weather"
         self.title = "Weather"
-        
+        if let loadedData = UserDefaults.standard.array(forKey: city) as? [[String: Any]] {
+            print(loadedData)
+        }
         if isoffline {
-                if let loadedData = UserDefaults.standard.array(forKey: "dictStore") as? [[String: Any]] {
+                if let loadedData = UserDefaults.standard.array(forKey: city) as? [[String: Any]] {
 
                     self.cityLbl.text = loadedData[0]["name"] as? String
                             self.disLbl.text = loadedData[0]["weatherDescription"] as? String
@@ -98,8 +100,8 @@ class WeatherViewController: UIViewController {
                         let hight = (weatherModel?.main.tempMax){
                         print(weatherModel?.name,weatherModel?.weather[0].weatherDescription)
                         self.dictStore.append(["name": weatherModel?.name, "weatherDescription" : weatherModel?.weather[0].weatherDescription, "deg" : (weatherModel?.wind.deg),"pressure" : (weatherModel?.main.pressure),"speed": (weatherModel?.wind.speed), "humidity" : (weatherModel?.main.humidity), "sunrise" : (weatherModel?.sys.sunrise),"sunset" : (weatherModel?.sys.sunset),"tempMin" : (weatherModel?.main.tempMin), "tempMax" : (weatherModel?.main.tempMax)])
-                        UserDefaults.standard.set(self.dictStore, forKey: "dictStore")
-                        UserDefaults.standard.set(true, forKey: "offline")
+                        UserDefaults.standard.set(self.dictStore, forKey: weatherModel?.name ?? "City")
+//                        UserDefaults.standard.set(weatherModel?.name, forKey: weatherModel?.name)
 
                         
                          self.cctempLbl.text = String(degb) + "℃"
